@@ -18,3 +18,13 @@ create table trainers (
     t_spec varchar2(100),
     t_salary number
 );
+
+create table staff(
+    s_id number primary key,
+    s_name varchar2(50),
+    s_add varchar2(100),
+    s_phone varchar2(15),
+    s_email varchar2(50),
+    s_salary number,
+    s_job varchar2(50)
+);
