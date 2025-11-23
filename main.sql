@@ -7,4 +7,5 @@ create table member (
     join_date date,
     status varchar2(20)
 );
+
 SELECT * from member;
