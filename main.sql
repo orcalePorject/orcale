@@ -1,3 +1,4 @@
+
 create table member (
     m_id number primary key,
     f_name varchar2(50),
