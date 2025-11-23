@@ -10,3 +10,11 @@ create table member (
 );
 
 select * from member;
+
+create table trainers (
+    t_id number primary key,
+    t_name varchar2(50),    
+    t_access varchar2(50),
+    t_spec varchar2(100),
+    t_salary number
+);
