@@ -19,6 +19,11 @@ create table trainers (
     t_salary number
 );
 
+insert into  trainers values(1,'shafaq','6:00 - 8:00 PM','strienght trainer',19000);
+insert into  trainers values(2,'khalid','5:00 - 7:00 AM','strienght trainer',17000);
+
+select * from TRAINERS;
+
 create table staff(
     s_id number primary key,
     s_name varchar2(50),
@@ -27,4 +32,11 @@ create table staff(
     s_email varchar2(50),
     s_salary number,
     s_job varchar2(50)
+);
+
+create table equipment (
+    e_id number primary key,
+    e_name varchar2(50),
+    e_quantity varchar2(50),
+    e_function varchar2(100)
 );
