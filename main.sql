@@ -27,6 +27,15 @@ create TABLE membership (
     CONSTRAINT check_is_active CHECK (is_active in ('y','n'))
 )
 
+create table member_subscriptions (
+    sub_id NUMBER primary key,
+    m_id NUMBER ,
+    plan_code VARCHAR2(20) ,
+    start_date DATE not NULL,
+    end_date DATE not NULL,
+    CONSTRAINT fk_membership_in_member_subscriptions foreign key(plan_code) references membership(plan_code),
+    CONSTRAINT fk_member_in_member_subscriptions foreign key(m_id) references member(m_id)
+)
 
 create table trainers (
     t_id number primary key,
