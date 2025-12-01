@@ -17,6 +17,16 @@ create table member (
 
 select * from member;
 
+create TABLE membership (
+    plan_id NUMBER GENERATED ALWAYS as IDENTITY primary key,
+    plan_code VARCHAR2(20) unique not NULL,
+    plan_desc VARCHAR2(200),
+    duration_days NUMBER not NULL,
+    price NUMBER not null ,
+    is_active CHAR(1) default 'y' not null ,
+    CONSTRAINT check_is_active CHECK (is_active in ('y','n'))
+)
+
 
 create table trainers (
     t_id number primary key,
