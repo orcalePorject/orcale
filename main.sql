@@ -1,15 +1,22 @@
 
 create table member (
-    m_id number primary key,
-    f_name varchar2(50),
-    fa_name varchar2(50),
+    m_id number GENERATED ALWAYS as IDENTITY primary key,
+    f_name varchar2(50) not null,
+    l_name varchar2(50),
     dob date,
-    phone varchar2(15),
-    join_date date,
-    status varchar2(20)
+    phone varchar2(15) not null,
+    email varchar2(100),
+    address VARCHAR2(150),
+    join_date date default sysdate not null,
+    status varchar2(20) default 'ACTIVE' NOT NULL,
+    created_at TIMESTAMP default CURRENT_timeStamp,
+
+    CONSTRAINT chk_states CHECK (status in ('ACTIVE','INACTIVE','SUSPENDED','EXPIRED'))
 );
 
+
 select * from member;
+
 
 create table trainers (
     t_id number primary key,
