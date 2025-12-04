@@ -128,4 +128,17 @@ CREATE TABLE trainer_attendance (
     CONSTRAINT t_att_pk PRIMARY KEY (att_date, trainer_id)
 );
 
-
+CREATE SEQUENCE seq_payment_id START WITH 1 INCREMENT BY 1;
+--  payments
+CREATE TABLE payments (
+    payment_id   NUMBER DEFAULT seq_payment_id.NEXTVAL PRIMARY KEY,
+    member_id    NUMBER,
+    amount       NUMBER(10,2) NOT NULL,
+    payment_date DATE DEFAULT SYSDATE,
+    description  VARCHAR2(200),
+    received_by  NUMBER,
+    status       char(1) DEFAULT 'y',
+    CONSTRAINT chk_in_payments CHECK (status IN ('y','n')),
+    CONSTRAINT mem_in_payment_fk FOREIGN key(member_id) REFERENCES member(m_id),
+    CONSTRAINT sttaf_in_payments_fk FOREIGN key(received_by) REFERENCES staff(staff_id)
+);
