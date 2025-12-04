@@ -50,15 +50,45 @@ insert into  trainers values(2,'khalid','5:00 - 7:00 AM','strienght trainer',170
 
 select * from TRAINERS;
 
-create table staff(
-    s_id number primary key,
-    s_name varchar2(50),
-    s_add varchar2(100),
-    s_phone varchar2(15),
-    s_email varchar2(50),
-    s_salary number,
-    s_job varchar2(50)
+
+-- sequence for staff
+CREATE SEQUENCE seq_staff_id START WITH 1 INCREMENT BY 1;
+
+--  staff table
+CREATE TABLE staff (
+    staff_id      NUMBER DEFAULT seq_staff_id.NEXTVAL CONSTRAINT staf_pk PRIMARY KEY,
+    first_name     VARCHAR2(100) NOT NULL,
+    last_name     VARCHAR2(100) NOT NULL,
+    phone         VARCHAR2(15) NOT NULL,
+    email         VARCHAR2(100),
+    role      VARCHAR2(50) NOT NULL CONSTRAINT staff_chk_role CHECK (role IN ('ADMIN', 'RECEPTION', 'CLEANER', 'MANAGER')),
+    username      VARCHAR2(50) UNIQUE,
+    password_hash VARCHAR2(200) ,
+    hire_date     DATE DEFAULT SYSDATE,
+    salary        NUMBER(10,2),
+    status        VARCHAR2(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE', 'ON_LEAVE')),
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+ALTER TABLE staff
+MODIFY  username VARCHAR2(100);
+ALTER TABLE staff
+MODIFY  password_hash VARCHAR2(100);
+
+
+
+-- Insert staff
+INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
+('Ahmad','Hamedi', '0799433222', 'admin@email.com', 'ADMIN', 'admin', 'admin123', 50000);
+
+INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
+( 'Asif','Mohammadi', '0791781674', 'reception@email.com', 'RECEPTION', 'reception', 'recep123', 30000);
+
+INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
+( 'Ali','Azizi', '0791733674', null, 'CLEANER', null, null, 3000);
+
+select * from staff;
 
 create table equipment (
     e_id number primary key,
