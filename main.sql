@@ -188,3 +188,20 @@ CREATE TABLE equipment (
     location       VARCHAR2(50),
     last_check     DATE
 );
+
+CREATE SEQUENCE seq_locker_id START WITH 1 INCREMENT BY 1;
+
+--  lockers
+CREATE TABLE lockers (
+    locker_id     NUMBER DEFAULT seq_locker_id.NEXTVAL PRIMARY KEY,
+    locker_number VARCHAR2(10) UNIQUE NOT NULL,
+    member_id     NUMBER ,
+    status        VARCHAR2(20) DEFAULT 'AVAILABLE',
+    CONSTRAINT CHK_IN_LOCKER_STATUS CHECK (status IN ('AVAILABLE', 'OCCUPIED', 'MAINTENANCE','RESERVED')),
+    key_number    VARCHAR2(20),
+    start_date    DATE,
+    end_date      DATE,
+    deposit       NUMBER(10,2) DEFAULT 0,
+     CONSTRAINT mem_in_locker_fk FOREIGN key(member_id) REFERENCES member(m_id)
+    
+);
