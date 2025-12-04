@@ -17,6 +17,7 @@ create table member (
 
 select * from member;
 
+-- membership_plans
 create TABLE membership (
     plan_id NUMBER GENERATED ALWAYS as IDENTITY primary key,
     plan_code VARCHAR2(20) unique not NULL,
@@ -37,18 +38,7 @@ create table member_subscriptions (
     CONSTRAINT fk_member_in_member_subscriptions foreign key(m_id) references member(m_id)
 )
 
-create table trainers (
-    t_id number primary key,
-    t_name varchar2(50),    
-    t_access varchar2(50),
-    t_spec varchar2(100),
-    t_salary number
-);
 
-insert into  trainers values(1,'shafaq','6:00 - 8:00 PM','strienght trainer',19000);
-insert into  trainers values(2,'khalid','5:00 - 7:00 AM','strienght trainer',17000);
-
-select * from TRAINERS;
 
 
 -- sequence for staff
@@ -90,9 +80,19 @@ INSERT INTO staff ( first_name,last_name, phone, email, role, username, password
 
 select * from staff;
 
-create table equipment (
-    e_id number primary key,
-    e_name varchar2(50),
-    e_quantity varchar2(50),
-    e_function varchar2(100)
+
+CREATE SEQUENCE seq_trainer_id START WITH 1 INCREMENT BY 1;
+--  trainers
+CREATE TABLE trainers (
+    trainer_id     NUMBER DEFAULT seq_trainer_id.NEXTVAL PRIMARY KEY,
+    first_name      VARCHAR2(100) NOT NULL,
+    last_name      VARCHAR2(100) NOT NULL,
+    phone          VARCHAR2(15) NOT NULL,
+    email          VARCHAR2(100),
+    specialization VARCHAR2(200),
+    hire_date      DATE DEFAULT SYSDATE,
+    hourly_rate    NUMBER(10,2),
+    status         VARCHAR2(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE'))
 );
+
+
