@@ -143,3 +143,17 @@ CREATE TABLE payments (
     CONSTRAINT mem_in_payment_fk FOREIGN key(member_id) REFERENCES member(m_id),
     CONSTRAINT sttaf_in_payments_fk FOREIGN key(received_by) REFERENCES staff(staff_id)
 );
+
+CREATE SEQUENCE seq_class_id START WITH 1 INCREMENT BY 1;
+-- classes
+CREATE TABLE classes (
+    class_id      NUMBER DEFAULT seq_class_id.NEXTVAL PRIMARY KEY,
+    class_name    VARCHAR2(100) NOT NULL,
+    trainer_id    NUMBER,
+    description   VARCHAR2(200),
+    max_capacity  NUMBER DEFAULT 20,
+    duration      NUMBER DEFAULT 60, -- minutes
+    is_active     CHAR(1) DEFAULT 'Y',
+    CONSTRAINT chk_in_classes CHECK (is_active IN ('Y', 'N')),
+    CONSTRAINT t_in_classes_fk FOREIGN key(trainer_id) REFERENCES trainers(trainer_id)
+);
