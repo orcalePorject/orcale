@@ -172,3 +172,19 @@ CREATE TABLE class_bookings (
     CONSTRAINT pk_inbooking_class primary key (class_id,member_id,booking_date),
     CONSTRAINT chk_in_class_booking CHECK (status IN ('BOOKED', 'ATTENDED', 'CANCELLED', 'NO_SHOW'))
 );
+
+
+CREATE SEQUENCE seq_equipment_id START WITH 1 INCREMENT BY 1;
+--  equipment
+CREATE TABLE equipment (
+    equipment_id   NUMBER DEFAULT seq_equipment_id.NEXTVAL PRIMARY KEY,
+    equipment_name VARCHAR2(100) NOT NULL,
+    category       VARCHAR2(50) ,
+    CONSTRAINT chk_in_equipment_category CHECK (category IN ('CARDIO', 'STRENGTH', 'FREE_WEIGHTS')),
+    purchase_date  DATE,
+    price          NUMBER(10,2),
+    status         VARCHAR2(20) DEFAULT 'AVAILABLE',
+    CONSTRAINT chk_in_equipment_status CHECK (status IN ('AVAILABLE', 'IN_USE', 'MAINTENANCE')),
+    location       VARCHAR2(50),
+    last_check     DATE
+);
