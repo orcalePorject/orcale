@@ -95,4 +95,37 @@ CREATE TABLE trainers (
     status         VARCHAR2(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE'))
 );
 
+-- create attendance tables 
+
+CREATE TABLE member_attendance (
+    att_date    DATE DEFAULT TRUNC(SYSDATE),
+    member_id   NUMBER NOT NULL,
+    is_present  NUMBER(1) DEFAULT 0,
+    CONSTRAINT mem_in_att_fk FOREIGN key(member_id) REFERENCES member(m_id),
+     CONSTRAINT m_att_chk check (is_present in (0,1)),
+   CONSTRAINT m_att_pk PRIMARY KEY (att_date, member_id)
+);
+
+
+CREATE TABLE staff_attendance (
+    att_date    DATE DEFAULT TRUNC(SYSDATE),
+    staff_id    NUMBER NOT NULL,
+    is_present  NUMBER(1) DEFAULT 0,
+
+    CONSTRAINT sttaf_in_att_fk FOREIGN key(staff_id) REFERENCES staff(staff_id),
+    CONSTRAINT s_att_chk check (is_present in (0,1)),
+    CONSTRAINT s_att_pk PRIMARY KEY (att_date, staff_id)
+);
+
+
+CREATE TABLE trainer_attendance (
+    att_date    DATE DEFAULT TRUNC(SYSDATE),
+    trainer_id  NUMBER NOT NULL,
+    is_present  NUMBER(1) DEFAULT 0,
+    
+    CONSTRAINT t_in_att_fk FOREIGN key(trainer_id) REFERENCES trainers(trainer_id),
+    CONSTRAINT t_att_chk check (is_present in (0,1)),
+    CONSTRAINT t_att_pk PRIMARY KEY (att_date, trainer_id)
+);
+
 
