@@ -13,7 +13,8 @@ create table member (
 
     CONSTRAINT chk_states CHECK (status in ('ACTIVE','INACTIVE','SUSPENDED','EXPIRED'))
 );
-
+alter table member add created_by NUMBER;
+alter table member add CONSTRAINT sttaf_in_mem_fk FOREIGN key(created_by) REFERENCES staff(staff_id);
 
 select * from member;
 
@@ -27,7 +28,7 @@ create TABLE membership (
     is_active CHAR(1) default 'y' not null ,
     CONSTRAINT check_is_active CHECK (is_active in ('y','n'))
 )
-
+-- member_subscription
 create table member_subscriptions (
     sub_id NUMBER primary key,
     m_id NUMBER ,
