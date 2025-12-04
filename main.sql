@@ -145,6 +145,7 @@ CREATE TABLE payments (
 );
 
 CREATE SEQUENCE seq_class_id START WITH 1 INCREMENT BY 1;
+
 -- classes
 CREATE TABLE classes (
     class_id      NUMBER DEFAULT seq_class_id.NEXTVAL PRIMARY KEY,
@@ -156,4 +157,18 @@ CREATE TABLE classes (
     is_active     CHAR(1) DEFAULT 'Y',
     CONSTRAINT chk_in_classes CHECK (is_active IN ('Y', 'N')),
     CONSTRAINT t_in_classes_fk FOREIGN key(trainer_id) REFERENCES trainers(trainer_id)
+);
+
+CREATE SEQUENCE seq_booking_id START WITH 1 INCREMENT BY 1;
+-- class_bookings
+CREATE TABLE class_bookings (
+    class_id     NUMBER,
+    member_id    NUMBER,
+    booking_date DATE NOT NULL,
+    start_time   TIMESTAMP NOT NULL,
+    end_time     TIMESTAMP NOT NULL,
+    status       VARCHAR2(20) DEFAULT 'BOOKED', 
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_inbooking_class primary key (class_id,member_id,booking_date),
+    CONSTRAINT chk_in_class_booking CHECK (status IN ('BOOKED', 'ATTENDED', 'CANCELLED', 'NO_SHOW'))
 );
