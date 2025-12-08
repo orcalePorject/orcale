@@ -18,30 +18,30 @@ alter table member add CONSTRAINT sttaf_in_mem_fk FOREIGN key(created_by) REFERE
 
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Rahim','Sultani', DATE '1995-02-12','0700123456','rahim.s@gmail.com','Kabul, Karte 3',1);
+('Rahim','Sultani', DATE '1995-02-12','0700123456','rahims@gmail.com','Kabul, Karte 3',1);
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Maryam','Naseeri',DATE '1999-11-20','0799456123','maryam.n@gmail.com','Kabul, Shahr-e-Naw',2);
+('Maryam','Naseeri',DATE '1999-11-20','0799456123','maryamn@gmail.com','Kabul, Shahr-e-Naw',2);
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Jawad','Ahmadi',DATE '1990-03-05','0789001122','jawad.a@gmail.com','Kabul, Makrorayan 2',1);
+('Jawad','Ahmadi',DATE '1990-03-05','0789001122','jawada@gmail.com','Kabul, Makrorayan 2',1);
 
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Hamid','Rashidi',DATE '1988-09-11','0700654321','hamid.r@gmail.com','Mazar, Karte Ariana',2);
+('Hamid','Rashidi',DATE '1988-09-11','0700654321','hamidr@gmail.com','Mazar, Karte Ariana',2);
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Sajjad','Fahimi',DATE '1997-12-22','0799876543','sajjad.f@gmail.com','Kabul, Kart-e-Parwan',1);
+('Sajjad','Fahimi',DATE '1997-12-22','0799876543','sajjadf@gmail.com','Kabul, Kart-e-Parwan',1);
 
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Omid','Sangin',DATE '1996-10-01','0799001122','omid.s@gmail.com','Kabul, Darulaman',2);
+('Omid','Sangin',DATE '1996-10-01','0799001122','omids@gmail.com','Kabul, Darulaman',2);
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Haseeb','Qaderi',DATE '1994-07-14','0700554433','haseeb.q@gmail.com','Herat, Injil',2);
+('Haseeb','Qaderi',DATE '1994-07-14','0700554433','haseebq@gmail.com','Herat, Injil',2);
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
-('Neda','Karim',DATE '2002-01-25','0789012344','neda.karim@gmail.com','Mazar, Dehdadi',1);
+('Neda','Karim',DATE '2002-01-25','0789012344','nedakarim@gmail.com','Mazar, Dehdadi',1);
 
 select * from member;
 
