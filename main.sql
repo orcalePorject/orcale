@@ -213,6 +213,37 @@ CREATE TABLE payments (
     CONSTRAINT mem_in_payment_fk FOREIGN key(member_id) REFERENCES member(m_id),
     CONSTRAINT sttaf_in_payments_fk FOREIGN key(received_by) REFERENCES staff(staff_id)
 );
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(1,800,'Monthly Basic Fee',2);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(2,1200,'Monthly Full Fee',1);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(3,2100,'Quarter Basic Payment',3);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(4,800,'Monthly Renewal',2);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(5,6000,'Half Year Payment',1);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(6,2000,'VIP Monthly',3);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(7,11000,'Annual Basic Plan',1);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(8,1200,'Monthly Full Access',2);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(9,15000,'Annual Full Access',1);
+INSERT INTO payments (member_id, amount, description, received_by)
+VALUES
+(10,800,'Monthly Basic Fee',3);
+
 
 CREATE SEQUENCE seq_class_id START WITH 1 INCREMENT BY 1;
 
