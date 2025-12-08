@@ -290,6 +290,8 @@ CREATE TABLE equipment (
     last_check     DATE
 );
 
+
+
 CREATE SEQUENCE seq_locker_id START WITH 1 INCREMENT BY 1;
 
 --  lockers
@@ -306,4 +308,6 @@ CREATE TABLE lockers (
      CONSTRAINT mem_in_locker_fk FOREIGN key(member_id) REFERENCES member(m_id)
     
 );
+
+
 
