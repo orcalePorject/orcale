@@ -79,6 +79,18 @@ INSERT INTO staff ( first_name,last_name, phone, email, role, username, password
 INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
 ( 'Ali','Azizi', '0791733674', null, 'CLEANER', null, null, 3000);
 
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Fawad','Sediqi','0799003300','fsediqi@yahoo.com','MANAGER','fawad_mgr','mgr123',45000);
+('Sahar','Rahimi','0799004400','sahar.@gmail.com','RECEPTION','sahar_rec','sahar123',28000),
+('Bilal','Hosseini','0799005500','bilah@gmail.com','CLEANER',NULL,NULL,8000),
+('Farhad','Nouri','0799006600','farhadnoori@gmail.com','ADMIN','farhad_admin','far123',48000),
+('Shabnam','Karimi','0799007700','shabnamkarimi@gmail.com','MANAGER','sh_kari','shab123',47000),
+('Esmat','Latifi','0799008800','esmatlatifi@gmail.com','CLEANER',NULL,NULL,7500),
+('Yama','Payman','0799009900','yamapayman@gmail.com','RECEPTION','yama_rec','yama123',26000),
+('Reza','Qasemi','0799010101','rqasemi@gmail.com','ADMIN','reza_admin','rez123',51000);
+
+
 select * from staff;
 
 
@@ -205,3 +217,4 @@ CREATE TABLE lockers (
      CONSTRAINT mem_in_locker_fk FOREIGN key(member_id) REFERENCES member(m_id)
     
 );
+
