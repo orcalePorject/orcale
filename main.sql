@@ -289,6 +289,36 @@ CREATE TABLE equipment (
     location       VARCHAR2(50),
     last_check     DATE
 );
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Treadmill A', 'CARDIO', DATE'2023-05-01', 45000, 'AVAILABLE','Hall A');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Treadmill B', 'CARDIO', DATE'2023-06-11', 46000, 'AVAILABLE','Hall A');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Bench Press', 'STRENGTH', DATE'2022-11-15', 25000, 'IN_USE','Gym Floor');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Squat Rack', 'STRENGTH', DATE'2023-01-20', 30000, 'AVAILABLE','Gym Floor');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Dumbbell Set 1', 'FREE_WEIGHTS', DATE'2023-02-18', 15000, 'AVAILABLE','Weights Area');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Dumbbell Set 2', 'FREE_WEIGHTS', DATE'2023-03-10', 16000,'AVAILABLE','Weights Area');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Elliptical Machine', 'CARDIO', DATE'2023-04-14', 32000,'MAINTENANCE','Workshop');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Leg Press Machine', 'STRENGTH', DATE'2022-10-22', 38000,'IN_USE','Gym Floor');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Rowing Machine', 'CARDIO', DATE'2023-01-30', 35000,'AVAILABLE','Hall B');
+INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
+VALUES
+('Pull-up Bar', 'STRENGTH', DATE'2022-12-12', 8000,'AVAILABLE','Gym Floor');
 
 
 
@@ -308,6 +338,36 @@ CREATE TABLE lockers (
      CONSTRAINT mem_in_locker_fk FOREIGN key(member_id) REFERENCES member(m_id)
     
 );
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L001',1,'OCCUPIED','K001',DATE'2025-01-01',DATE'2025-02-01',200);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L002',2,'OCCUPIED','K002',DATE'2025-01-05',DATE'2025-02-05',200);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L003',NULL,'AVAILABLE',NULL,NULL,NULL,0);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L004',3,'OCCUPIED','K004',DATE'2025-01-10',DATE'2025-02-10',200);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L005',4,'OCCUPIED','K005',DATE'2025-01-12',DATE'2025-02-12',200);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L006',NULL,'AVAILABLE',NULL,NULL,NULL,0);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L007',5,'OCCUPIED','K007',DATE'2025-01-20',DATE'2025-02-20',200);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L008',6,'OCCUPIED','K008',DATE'2025-01-15',DATE'2025-02-15',200);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L009',NULL,'AVAILABLE',NULL,NULL,NULL,0);
+INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
+VALUES
+('L010',7,'OCCUPIED','K010',DATE'2025-01-18',DATE'2025-02-18',200);
 
 
 
