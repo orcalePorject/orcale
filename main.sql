@@ -138,6 +138,37 @@ CREATE TABLE trainers (
     hourly_rate    NUMBER(10,2),
     status         VARCHAR2(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE'))
 );
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Murtaza','Karimi','0799550011','m.karimi@gmail.com','Bodybuilding',500);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Tamana','Rahmani','0799550022','t.rahmani@gmail.com','Yoga',400);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Farid','Latifi','0799550033','farid.latifi@yahoo.com','CrossFit',550);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Shakila','Nawabi','0799550044','sh.nawabi@gmail.com','Zumba',450);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Haroon','Qaderi','0799550055','h.qaderi@gmail.com','Strength Training',600);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Wahid','Sakhi','0799550066','wahid.sakhi@gmail.com','Cardio',350);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Nargis','Faizi','0799550077','n.faizi@gmail.com','Pilates',480);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Yasin','Ahmadzai','0799550088','yasin.ah@gmail.com','Kickboxing',550);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Bilquis','Hashimi','0799550099','b.hashimi@gmail.com','Aerobics',400);
+INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourly_rate)
+VALUES
+('Sami','Rohani','0799550100','s.rohani@gmail.com','Martial Arts',650);
+
 
 -- create attendance tables 
 
