@@ -25,18 +25,14 @@ VALUES
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
 ('Jawad','Ahmadi',DATE '1990-03-05','0789001122','jawad.a@gmail.com','Kabul, Makrorayan 2',1);
-INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
-VALUES
-('Lina','Arifi',DATE '2001-06-17','0799234578','lina.arifi@gmail.com','Herat, Jebraeel',3);
+
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
 ('Hamid','Rashidi',DATE '1988-09-11','0700654321','hamid.r@gmail.com','Mazar, Karte Ariana',2);
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
 ('Sajjad','Fahimi',DATE '1997-12-22','0799876543','sajjad.f@gmail.com','Kabul, Kart-e-Parwan',1);
-INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
-VALUES
-('Zahra','Sami',DATE '2000-04-04','0789345678','zahra.sami@gmail.com','Kabul, Shash Darak',3);
+
 INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
 ('Omid','Sangin',DATE '1996-10-01','0799001122','omid.s@gmail.com','Kabul, Darulaman',2);
@@ -112,14 +108,14 @@ INSERT INTO staff ( first_name,last_name, phone, email, role, username, password
 
 INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
 VALUES 
-('Fawad','Sediqi','0799003300','fsediqi@yahoo.com','MANAGER','fawad_mgr','mgr123',45000);
-('Sahar','Rahimi','0799004400','sahar.@gmail.com','RECEPTION','sahar_rec','sahar123',28000),
-('Bilal','Hosseini','0799005500','bilah@gmail.com','CLEANER',NULL,NULL,8000),
-('Farhad','Nouri','0799006600','farhadnoori@gmail.com','ADMIN','farhad_admin','far123',48000),
-('Shabnam','Karimi','0799007700','shabnamkarimi@gmail.com','MANAGER','sh_kari','shab123',47000),
-('Esmat','Latifi','0799008800','esmatlatifi@gmail.com','CLEANER',NULL,NULL,7500),
-('Yama','Payman','0799009900','yamapayman@gmail.com','RECEPTION','yama_rec','yama123',26000),
 ('Reza','Qasemi','0799010101','rqasemi@gmail.com','ADMIN','reza_admin','rez123',51000);
+-- ('Yama','Payman','0799009900','yamapayman@gmail.com','RECEPTION','yama_rec','yama123',26000);
+-- ('Esmat','Latifi','0799008800','esmatlatifi@gmail.com','CLEANER',NULL,NULL,7500);
+-- ('Shabnam','Karimi','0799007700','shabnamkarimi@gmail.com','MANAGER','sh_kari','shab123',47000);
+-- ('Farhad','Nouri','0799006600','farhadnoori@gmail.com','ADMIN','farhad_admin','far123',48000);
+-- ('Bilal','Hosseini','0799005500','bilah@gmail.com','CLEANER',NULL,NULL,8000);
+-- ('Sahar','Rahimi','0799004400','sahar.@gmail.com','RECEPTION','sahar_rec','sahar123',28000);
+-- ('Fawad','Sediqi','0799003300','fsediqi@yahoo.com','MANAGER','fawad_mgr','mgr123',45000);
 
 
 select * from staff;
