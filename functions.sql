@@ -1,3 +1,4 @@
+-- function for checking
 CREATE OR REPLACE FUNCTION fn_check_member_status(
     p_member_id NUMBER
 ) RETURN VARCHAR2 IS
@@ -37,4 +38,14 @@ BEGIN
     END;
 END;
 /
-SELECT F_NAME,m_id,fn_check_member_status(m_id) from MEMBER;
+
+-- calculate age
+
+CREATE OR REPLACE FUNCTION fn_calculate_age(
+    p_dob DATE
+) RETURN NUMBER IS
+BEGIN
+    RETURN TRUNC(MONTHS_BETWEEN(SYSDATE, p_dob) / 12);
+END;
+/
+SELECT F_NAME,m_id,fn_calculate_age(dob) as age from MEMBER;
