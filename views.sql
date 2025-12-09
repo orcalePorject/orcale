@@ -97,7 +97,25 @@ LEFT JOIN trainers t ON c.trainer_id = t.trainer_id
 GROUP BY c.class_id, c.class_name, t.first_name, t.last_name, c.max_capacity, c.is_active
 ORDER BY occupancy_rate DESC;
 /
-select * from V_CLASS_OCCUPANCY;
+
+CREATE OR REPLACE VIEW v_equipment_status AS
+SELECT 
+    e.equipment_name,
+    e.category,
+    e.status,
+    e.location,
+    e.last_check,
+    CASE 
+        WHEN e.last_check IS NULL THEN 'NEVER_CHECKED'
+        WHEN e.last_check < SYSDATE - 90 THEN 'OVERDUE_CHECK'
+        WHEN e.last_check < SYSDATE - 60 THEN 'DUE_SOON'
+        ELSE 'UP_TO_DATE'
+    END AS maintenance_status,
+    ROUND(MONTHS_BETWEEN(SYSDATE, e.purchase_date)) AS months_old
+FROM equipment e
+ORDER BY maintenance_status, months_old DESC;
+/
+select * from V_EQUIPMENT_STATUS;
 
 COMMIT;
 
