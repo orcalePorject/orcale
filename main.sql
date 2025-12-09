@@ -55,6 +55,28 @@ create TABLE membership (
     is_active CHAR(1) default 'y' not null ,
     CONSTRAINT check_is_active CHECK (is_active in ('y','n'))
 )
+
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('BASIC_MONTH', 'Basic monthly membership', 30, 800, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('FULL_MONTH', 'Full access monthly membership', 30, 1200, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('QUARTER_BASIC', 'Quarterly basic membership', 90, 2100, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('HALF_YEAR', 'Half-year full membership', 180, 6000, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('ANNUAL_BASIC', 'Annual basic plan', 365, 11000, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('VIP_MONTH', 'VIP monthly membership with all facilities', 30, 2000, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('STUDENT_MONTH', 'Discounted monthly plan for students', 30, 600, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('WEEKEND_PLAN', 'Access on weekends only', 30, 500, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('YOGA_PLAN', 'Yoga and wellness monthly', 30, 700, 'y');
+INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
+('CROSSFIT_PLAN', 'CrossFit training monthly', 30, 900, 'y');
+
 -- member_subscription
 create table member_subscriptions (
     sub_id NUMBER primary key,
@@ -109,13 +131,27 @@ INSERT INTO staff ( first_name,last_name, phone, email, role, username, password
 INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
 VALUES 
 ('Reza','Qasemi','0799010101','rqasemi@gmail.com','ADMIN','reza_admin','rez123',51000);
--- ('Yama','Payman','0799009900','yamapayman@gmail.com','RECEPTION','yama_rec','yama123',26000);
--- ('Esmat','Latifi','0799008800','esmatlatifi@gmail.com','CLEANER',NULL,NULL,7500);
--- ('Shabnam','Karimi','0799007700','shabnamkarimi@gmail.com','MANAGER','sh_kari','shab123',47000);
--- ('Farhad','Nouri','0799006600','farhadnoori@gmail.com','ADMIN','farhad_admin','far123',48000);
--- ('Bilal','Hosseini','0799005500','bilah@gmail.com','CLEANER',NULL,NULL,8000);
--- ('Sahar','Rahimi','0799004400','sahar.@gmail.com','RECEPTION','sahar_rec','sahar123',28000);
--- ('Fawad','Sediqi','0799003300','fsediqi@yahoo.com','MANAGER','fawad_mgr','mgr123',45000);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Yama','Payman','0799009900','yamapayman@gmail.com','RECEPTION','yama_rec','yama123',26000);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Esmat','Latifi','0799008800','esmatlatifi@gmail.com','CLEANER',NULL,NULL,7500);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Shabnam','Karimi','0799007700','shabnamkarimi@gmail.com','MANAGER','sh_kari','shab123',47000);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Farhad','Nouri','0799006600','farhadnoori@gmail.com','ADMIN','farhad_admin','far123',48000);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Bilal','Hosseini','0799005500','bilah@gmail.com','CLEANER',NULL,NULL,8000);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Sahar','Rahimi','0799004400','sahar.@gmail.com','RECEPTION','sahar_rec','sahar123',28000);
+INSERT INTO staff (first_name, last_name, phone, email, role, username, password_hash, salary)
+VALUES 
+('Fawad','Sediqi','0799003300','fsediqi@yahoo.com','MANAGER','fawad_mgr','mgr123',45000);
 
 
 select * from staff;
@@ -165,7 +201,7 @@ INSERT INTO trainers (first_name, last_name, phone, email, specialization, hourl
 VALUES
 ('Sami','Rohani','0799550100','s.rohani@gmail.com','Martial Arts',650);
 
-
+select * from trainers;
 -- create attendance tables 
 
 CREATE TABLE member_attendance (
@@ -215,35 +251,30 @@ CREATE TABLE payments (
 );
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(1,800,'Monthly Basic Fee',2);
+(13,800,'Monthly Basic Fee',2);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(2,1200,'Monthly Full Fee',1);
+(14,1200,'Monthly Full Fee',1);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(3,2100,'Quarter Basic Payment',3);
+(15,2100,'Quarter Basic Payment',1);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(4,800,'Monthly Renewal',2);
+(16,800,'Monthly Renewal',2);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(5,6000,'Half Year Payment',1);
+(17,6000,'Half Year Payment',1);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(6,2000,'VIP Monthly',3);
+(18,2000,'VIP Monthly',15);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(7,11000,'Annual Basic Plan',1);
+(19,11000,'Annual Basic Plan',1);
 INSERT INTO payments (member_id, amount, description, received_by)
 VALUES
-(8,1200,'Monthly Full Access',2);
-INSERT INTO payments (member_id, amount, description, received_by)
-VALUES
-(9,15000,'Annual Full Access',1);
-INSERT INTO payments (member_id, amount, description, received_by)
-VALUES
-(10,800,'Monthly Basic Fee',3);
+(20,1200,'Monthly Full Access',2);
 
+select * from payments;
 
 CREATE SEQUENCE seq_class_id START WITH 1 INCREMENT BY 1;
 
@@ -340,34 +371,34 @@ CREATE TABLE lockers (
 );
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L001',1,'OCCUPIED','K001',DATE'2025-01-01',DATE'2025-02-01',200);
+('L001',19,'OCCUPIED','K001',DATE'2025-01-01',DATE'2025-02-01',200);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L002',2,'OCCUPIED','K002',DATE'2025-01-05',DATE'2025-02-05',200);
+('L002',18,'OCCUPIED','K002',DATE'2025-01-05',DATE'2025-02-05',200);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
 ('L003',NULL,'AVAILABLE',NULL,NULL,NULL,0);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L004',3,'OCCUPIED','K004',DATE'2025-01-10',DATE'2025-02-10',200);
+('L004',13,'OCCUPIED','K004',DATE'2025-01-10',DATE'2025-02-10',200);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L005',4,'OCCUPIED','K005',DATE'2025-01-12',DATE'2025-02-12',200);
+('L005',14,'OCCUPIED','K005',DATE'2025-01-12',DATE'2025-02-12',200);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
 ('L006',NULL,'AVAILABLE',NULL,NULL,NULL,0);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L007',5,'OCCUPIED','K007',DATE'2025-01-20',DATE'2025-02-20',200);
+('L007',15,'OCCUPIED','K007',DATE'2025-01-20',DATE'2025-02-20',200);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L008',6,'OCCUPIED','K008',DATE'2025-01-15',DATE'2025-02-15',200);
+('L008',16,'OCCUPIED','K008',DATE'2025-01-15',DATE'2025-02-15',200);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
 ('L009',NULL,'AVAILABLE',NULL,NULL,NULL,0);
 INSERT INTO lockers (locker_number, member_id, status, key_number, start_date, end_date, deposit)
 VALUES
-('L010',7,'OCCUPIED','K010',DATE'2025-01-18',DATE'2025-02-18',200);
+('L010',17,'OCCUPIED','K010',DATE'2025-01-18',DATE'2025-02-18',200);
 
-
+select * from lockers;
 
