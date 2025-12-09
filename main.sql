@@ -79,7 +79,7 @@ INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) V
 
 -- member_subscription
 create table member_subscriptions (
-    sub_id NUMBER primary key,
+    sub_id NUMBER GENERATED ALWAYS as IDENTITY primary key,
     m_id NUMBER ,
     plan_code VARCHAR2(20) ,
     start_date DATE not NULL,
@@ -87,6 +87,23 @@ create table member_subscriptions (
     CONSTRAINT fk_membership_in_member_subscriptions foreign key(plan_code) references membership(plan_code),
     CONSTRAINT fk_member_in_member_subscriptions foreign key(m_id) references member(m_id)
 )
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(13, 'BASIC_MONTH', DATE '2025-12-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(14, 'QUARTER_BASIC', DATE '2025-10-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(15, 'HALF_YEAR', DATE '2025-07-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(16, 'ANNUAL_BASIC', DATE '2025-01-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(17, 'VIP_MONTH', DATE '2025-12-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(18, 'STUDENT_MONTH', DATE '2025-12-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(19, 'WEEKEND_PLAN', DATE '2025-12-01', DATE '2025-12-31');
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(20, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-31');
+
 
 
 
