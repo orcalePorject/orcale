@@ -79,7 +79,25 @@ WHERE payment_date >= ADD_MONTHS(SYSDATE, -12)
 GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
 ORDER BY revenue_month DESC;
 /
-select * from V_DAILY_ATTENDANCE_SUMMARY;
+
+CREATE OR REPLACE VIEW v_class_occupancy AS
+SELECT 
+    c.class_id,
+    c.class_name,
+    t.first_name || ' ' || t.last_name AS trainer_name,
+    COUNT(cb.member_id) AS bookings_count,
+    c.max_capacity,
+    ROUND(COUNT(cb.member_id) * 100 / c.max_capacity, 2) AS occupancy_rate,
+    c.is_active
+FROM classes c
+LEFT JOIN class_bookings cb ON c.class_id = cb.class_id 
+    AND cb.booking_date = TRUNC(SYSDATE)
+    AND cb.status IN ('BOOKED', 'ATTENDED')
+LEFT JOIN trainers t ON c.trainer_id = t.trainer_id
+GROUP BY c.class_id, c.class_name, t.first_name, t.last_name, c.max_capacity, c.is_active
+ORDER BY occupancy_rate DESC;
+/
+select * from V_CLASS_OCCUPANCY;
 
 COMMIT;
 
