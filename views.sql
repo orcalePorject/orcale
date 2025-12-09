@@ -65,6 +65,20 @@ FROM trainer_attendance
 WHERE att_date = TRUNC(SYSDATE)
 GROUP BY att_date;
 /
+
+CREATE OR REPLACE VIEW v_monthly_revenue AS
+SELECT 
+    TO_CHAR(payment_date, 'YYYY-MM') AS revenue_month,
+    COUNT(*) AS transaction_count,
+    SUM(amount) AS total_revenue,
+    AVG(amount) AS avg_transaction,
+    MIN(payment_date) AS first_payment,
+    MAX(payment_date) AS last_payment
+FROM payments
+WHERE payment_date >= ADD_MONTHS(SYSDATE, -12)
+GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
+ORDER BY revenue_month DESC;
+/
 select * from V_DAILY_ATTENDANCE_SUMMARY;
 
 COMMIT;
