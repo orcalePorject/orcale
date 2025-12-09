@@ -40,3 +40,41 @@ BEGIN
  SP_REGISTER_MEMBER('Maner','Ahmadi',Date '2004-09-12','0799776554','maner@gmail.com','Mazer sharif,3 street','VIP_MONTH',15);
  END;
 /
+
+
+-- record attendance
+CREATE OR REPLACE PROCEDURE sp_record_attendance(
+    p_person_id   NUMBER,
+    p_person_type VARCHAR2, -- 'MEMBER', 'STAFF', 'TRAINER'
+    p_is_present  NUMBER, -- 0,1
+    p_att_date    DATE DEFAULT SYSDATE
+) IS
+BEGIN
+    IF p_person_type = 'MEMBER' THEN
+        INSERT INTO member_attendance (att_date, member_id, is_present)
+        VALUES (TRUNC(p_att_date), p_person_id, p_is_present);
+        
+    ELSIF p_person_type = 'STAFF' THEN
+        INSERT INTO staff_attendance (att_date, staff_id, is_present)
+        VALUES (TRUNC(p_att_date), p_person_id, p_is_present);
+        
+    ELSIF p_person_type = 'TRAINER' THEN
+        INSERT INTO trainer_attendance (att_date, trainer_id, is_present)
+        VALUES (TRUNC(p_att_date), p_person_id, p_is_present);
+    END IF;
+    
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Attendance recorded successfully.');
+EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+        DBMS_OUTPUT.PUT_LINE('Attendance already recorded for this date.');
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+/
+BEGIN 
+    sp_record_attendance(18,'MEMBER',1);
+end;
+
+SELECT * from MEMBER_ATTENDANCE;
