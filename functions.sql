@@ -49,3 +49,32 @@ BEGIN
 END;
 /
 SELECT F_NAME,m_id,fn_calculate_age(dob) as age from MEMBER;
+
+-- check class cpacity
+CREATE OR REPLACE FUNCTION fn_check_class_capacity(
+    p_class_id NUMBER,
+    p_date DATE DEFAULT SYSDATE
+) RETURN VARCHAR2 IS
+    v_current_bookings NUMBER;
+    v_max_capacity NUMBER;
+BEGIN
+    SELECT max_capacity INTO v_max_capacity
+    FROM classes WHERE class_id = p_class_id;
+    
+    SELECT COUNT(*) INTO v_current_bookings
+    FROM class_bookings
+    WHERE class_id = p_class_id
+    AND booking_date = TRUNC(p_date)
+    AND status IN ('BOOKED', 'ATTENDED');
+    
+    IF v_current_bookings >= v_max_capacity THEN
+        RETURN 'FULL';
+    ELSIF v_current_bookings >= v_max_capacity * 0.8 THEN
+        RETURN 'ALMOST_FULL';
+    ELSE
+        RETURN 'AVAILABLE';
+    END IF;
+END;
+/
+
+SELECT class_name,fn_check_class_capacity(class_id) as status from CLASSES;
