@@ -29,6 +29,8 @@ create TABLE membership (
     CONSTRAINT check_is_active CHECK (is_active in ('y','n'))
 )
 
+select * from membership;
+
 -- member_subscription
 create table member_subscriptions (
     sub_id NUMBER GENERATED ALWAYS as IDENTITY primary key,
@@ -40,7 +42,7 @@ create table member_subscriptions (
     CONSTRAINT fk_member_in_member_subscriptions foreign key(m_id) references member(m_id)
 )
 
-
+select * from MEMBER_SUBSCRIPTIONS;
 -- sequence for staff
 CREATE SEQUENCE seq_staff_id START WITH 1 INCREMENT BY 1;
 
@@ -148,6 +150,8 @@ CREATE TABLE classes (
     CONSTRAINT t_in_classes_fk FOREIGN key(trainer_id) REFERENCES trainers(trainer_id)
 );
 
+select * from classes;
+
 CREATE SEQUENCE seq_booking_id START WITH 1 INCREMENT BY 1;
 -- class_bookings
 CREATE TABLE class_bookings (
@@ -161,6 +165,8 @@ CREATE TABLE class_bookings (
     CONSTRAINT pk_inbooking_class primary key (class_id,member_id,booking_date),
     CONSTRAINT chk_in_class_booking CHECK (status IN ('BOOKED', 'ATTENDED', 'CANCELLED', 'NO_SHOW'))
 );
+
+select * from CLASS_BOOKINGS;
 
 
 CREATE SEQUENCE seq_equipment_id START WITH 1 INCREMENT BY 1;

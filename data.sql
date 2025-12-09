@@ -20,7 +20,7 @@ INSERT INTO classes (class_name, trainer_id, description, max_capacity, duration
 ('CrossFit Challenge', 20, 'High-intensity CrossFit class', 20, 60, 'Y');
 INSERT INTO classes (class_name, trainer_id, description, max_capacity, duration, is_active) VALUES
 ('Functional Training', 20, 'Functional movement and fitness', 20, 60, 'Y');
-
+select * from classes;
 -- class_bookings 
 INSERT INTO class_bookings (class_id, member_id, booking_date, start_time, end_time, status) VALUES
 (1, 11, DATE '2025-12-09', TIMESTAMP '2025-12-09 07:00:00', TIMESTAMP '2025-12-09 08:00:00', 'BOOKED');
@@ -272,3 +272,5 @@ VALUES
 INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
 VALUES
 ('Pull-up Bar', 'STRENGTH', DATE'2022-12-12', 8000,'AVAILABLE','Gym Floor');
+
+commit;
