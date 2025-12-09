@@ -40,6 +40,10 @@ BEGIN
  SP_REGISTER_MEMBER('Maner','Ahmadi',Date '2004-09-12','0799776554','maner@gmail.com','Mazer sharif,3 street','VIP_MONTH',15);
  END;
 /
+BEGIN
+ SP_REGISTER_MEMBER('alI','Ahmadi',Date '2002-09-12','0799776554','maner@gmail.com','Mazer sharif,3 street','VIP_MONTH',15);
+ END;
+/
 
 
 -- record attendance
@@ -116,4 +120,13 @@ BEGIN
     );
 END;
 /
-SELECT * from payments;
+BEGIN
+    sp_process_payment(
+        p_member_id   => 26,
+        p_amount      => 500,
+        p_description => 'VIP Membership Fee',
+        p_received_by => 1
+    );
+END;
+/
+SELECT * from MEMBER;
