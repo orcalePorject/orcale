@@ -94,8 +94,8 @@ INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) V
 ('CROSSFIT_PLAN', 'CrossFit training monthly', 30, 900, 'y');
 
 -- member_subscriptions
-INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
-(13, 'BASIC_MONTH', DATE '2025-12-01', DATE '2025-12-4');
+INSERT INTO member_subscriptions (m_id, plan_code, start_date, end_date)
+VALUES (13, 'QUARTER_BASIC', SYSDATE - 25, SYSDATE + 5);
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (14, 'QUARTER_BASIC', DATE '2025-10-01', DATE '2025-12-31');
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
@@ -112,6 +112,7 @@ INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (20, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-31');
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (17, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-8');
+delete from member_subscriptions where m_id=13;
 commit;
 -- Insert staff
 INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
