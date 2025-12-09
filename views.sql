@@ -23,7 +23,6 @@ WHERE m.status = 'ACTIVE'
 AND ms.end_date >= SYSDATE
 ORDER BY ms.end_date;
 /
--- check any one expried or soon make for this trgger
 select * from v_active_members;
 
 -- view daily attendance
@@ -79,7 +78,9 @@ WHERE payment_date >= ADD_MONTHS(SYSDATE, -12)
 GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
 ORDER BY revenue_month DESC;
 /
+select * from v_monthly_revenue;
 
+-- class occupancy
 CREATE OR REPLACE VIEW v_class_occupancy AS
 SELECT 
     c.class_id,
@@ -97,6 +98,8 @@ LEFT JOIN trainers t ON c.trainer_id = t.trainer_id
 GROUP BY c.class_id, c.class_name, t.first_name, t.last_name, c.max_capacity, c.is_active
 ORDER BY occupancy_rate DESC;
 /
+
+select * from V_CLASS_OCCUPANCY;
 
 CREATE OR REPLACE VIEW v_equipment_status AS
 SELECT 
@@ -121,3 +124,5 @@ COMMIT;
 
 
 
+
+-- check any one expried or soon make for this trgger
