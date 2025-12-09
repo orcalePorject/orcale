@@ -112,7 +112,6 @@ INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (20, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-31');
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (17, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-8');
-delete from MEMBER_SUBSCRIPTIONS where m_id=13;
 commit;
 -- Insert staff
 INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
@@ -273,5 +272,23 @@ VALUES
 INSERT INTO equipment (equipment_name, category, purchase_date, price, status, location)
 VALUES
 ('Pull-up Bar', 'STRENGTH', DATE'2022-12-12', 8000,'AVAILABLE','Gym Floor');
+
+
+
+-- Member Attendance
+
+INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
+(TRUNC(SYSDATE), 13, 1);
+INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
+(TRUNC(SYSDATE), 14, 0);
+INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
+(TRUNC(SYSDATE), 15, 1);
+INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
+(TRUNC(SYSDATE)-1, 15, 1);
+INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
+(TRUNC(SYSDATE)-1, 16, 1);
+INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
+(TRUNC(SYSDATE)-2, 17, 0);
+
 
 commit;

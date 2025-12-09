@@ -25,6 +25,48 @@ ORDER BY ms.end_date;
 /
 -- check any one expried or soon make for this trgger
 select * from v_active_members;
+
+-- view daily attendance
+CREATE OR REPLACE VIEW v_daily_attendance_summary AS
+SELECT 
+    att_date,
+    'MEMBER' AS person_type,
+    COUNT(*) AS total_people,
+    SUM(is_present) AS present_count,
+    COUNT(*) - SUM(is_present) AS absent_count,
+    ROUND(SUM(is_present) * 100 / COUNT(*), 2) AS attendance_rate
+FROM member_attendance
+WHERE att_date = TRUNC(SYSDATE)
+GROUP BY att_date
+
+UNION ALL
+
+SELECT 
+    att_date,
+    'STAFF' AS person_type,
+    COUNT(*) AS total_people,
+    SUM(is_present) AS present_count,
+    COUNT(*) - SUM(is_present) AS absent_count,
+    ROUND(SUM(is_present) * 100 / COUNT(*), 2) AS attendance_rate
+FROM staff_attendance
+WHERE att_date = TRUNC(SYSDATE)
+GROUP BY att_date
+
+UNION ALL
+
+SELECT 
+    att_date,
+    'TRAINER' AS person_type,
+    COUNT(*) AS total_people,
+    SUM(is_present) AS present_count,
+    COUNT(*) - SUM(is_present) AS absent_count,
+    ROUND(SUM(is_present) * 100 / COUNT(*), 2) AS attendance_rate
+FROM trainer_attendance
+WHERE att_date = TRUNC(SYSDATE)
+GROUP BY att_date;
+/
+select * from V_DAILY_ATTENDANCE_SUMMARY;
+
 COMMIT;
 
 

@@ -85,6 +85,7 @@ CREATE TABLE trainers (
 );
 
 select * from trainers;
+
 -- create attendance tables 
 
 CREATE TABLE member_attendance (
