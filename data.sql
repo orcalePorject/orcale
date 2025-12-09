@@ -290,5 +290,19 @@ INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
 INSERT INTO member_attendance (att_date, member_id, is_present) VALUES
 (TRUNC(SYSDATE)-2, 17, 0);
 
+-- Staff Attendance 
 
+INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
+(TRUNC(SYSDATE), 15, 1);
+INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
+(TRUNC(SYSDATE), 16, 1);
+INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
+(TRUNC(SYSDATE), 17, 0);
+INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
+(TRUNC(SYSDATE)-1, 4, 1);
+INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
+(TRUNC(SYSDATE)-2, 16, 0);
+
+
+select * from staff;
 commit;
