@@ -71,7 +71,6 @@ INSERT INTO member (f_name, l_name, dob, phone, email, address, created_by)
 VALUES
 ('Neda','Karim',DATE '2002-01-25','0789012344','nedakarim@gmail.com','Mazar, Dehdadi',1);
 
-
 -- membership 
 INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) VALUES
 ('BASIC_MONTH', 'Basic monthly membership', 30, 800, 'y');
@@ -96,7 +95,7 @@ INSERT INTO membership (plan_code, plan_desc, duration_days, price, is_active) V
 
 -- member_subscriptions
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
-(13, 'BASIC_MONTH', DATE '2025-12-01', DATE '2025-12-31');
+(13, 'BASIC_MONTH', DATE '2025-12-01', DATE '2025-12-4');
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (14, 'QUARTER_BASIC', DATE '2025-10-01', DATE '2025-12-31');
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
@@ -111,8 +110,10 @@ INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (19, 'WEEKEND_PLAN', DATE '2025-12-01', DATE '2025-12-31');
 INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
 (20, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-31');
-
-
+INSERT INTO member_subscriptions ( m_id, plan_code, start_date, end_date) VALUES
+(17, 'YOGA_PLAN', DATE '2025-12-01', DATE '2025-12-8');
+delete from MEMBER_SUBSCRIPTIONS where m_id=13;
+commit;
 -- Insert staff
 INSERT INTO staff ( first_name,last_name, phone, email, role, username, password_hash, salary) VALUES
 ('Ahmad','Hamedi', '0799433222', 'admin@email.com', 'ADMIN', 'admin', 'admin123', 50000);
