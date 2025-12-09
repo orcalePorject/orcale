@@ -303,6 +303,18 @@ INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
 INSERT INTO staff_attendance (att_date, staff_id, is_present) VALUES
 (TRUNC(SYSDATE)-2, 16, 0);
 
+-- Trainer Attendance 
 
-select * from staff;
+INSERT INTO trainer_attendance (att_date, trainer_id, is_present) VALUES
+(TRUNC(SYSDATE), 11, 1);
+INSERT INTO trainer_attendance (att_date, trainer_id, is_present) VALUES
+(TRUNC(SYSDATE), 12, 0);
+INSERT INTO trainer_attendance (att_date, trainer_id, is_present) VALUES
+(TRUNC(SYSDATE)-1, 11, 1);
+INSERT INTO trainer_attendance (att_date, trainer_id, is_present) VALUES
+(TRUNC(SYSDATE)-1, 12, 1);
+INSERT INTO trainer_attendance (att_date, trainer_id, is_present) VALUES
+(TRUNC(SYSDATE)-2, 11, 0);
+
+
 commit;
