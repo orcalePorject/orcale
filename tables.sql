@@ -205,3 +205,14 @@ CREATE TABLE lockers (
 
 select * from lockers;
 
+
+CREATE TABLE payment_audit_log (
+    log_id        NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    payment_id    NUMBER,
+    member_id     NUMBER,
+    amount        NUMBER,
+    payment_date  DATE,
+    operation     VARCHAR2(10),
+    changed_by    VARCHAR2(100),
+    changed_date  DATE DEFAULT SYSDATE
+);
