@@ -40,6 +40,10 @@ BEGIN
  SP_REGISTER_MEMBER('Maner','Ahmadi',Date '2004-09-12','0799776554','maner@gmail.com','Mazer sharif,3 street','VIP_MONTH',15);
  END;
 /
+BEGIN
+ SP_REGISTER_MEMBER('alI','Ahmadi',Date '2002-09-12','0799776554','maner@gmail.com','Mazer sharif,3 street','VIP_MONTH',15);
+ END;
+/
 
 
 -- record attendance
@@ -78,3 +82,51 @@ BEGIN
 end;
 
 SELECT * from MEMBER_ATTENDANCE;
+
+-- process payment
+CREATE OR REPLACE PROCEDURE sp_process_payment(
+    p_member_id    NUMBER,
+    p_amount       NUMBER,
+    p_description  VARCHAR2,
+    p_received_by  NUMBER
+) IS
+    v_payment_id NUMBER;
+BEGIN
+    INSERT INTO payments (member_id, amount, description, received_by)
+    VALUES (p_member_id, p_amount, p_description, p_received_by)
+    RETURNING payment_id INTO v_payment_id;
+    
+    DBMS_OUTPUT.PUT_LINE('Payment processed successfully. Payment ID: ' || v_payment_id);
+    
+    UPDATE member
+    SET status = 'ACTIVE'
+    WHERE m_id = p_member_id
+    AND status = 'INACTIVE';
+    
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+/
+
+BEGIN
+    sp_process_payment(
+        p_member_id   => 25,
+        p_amount      => 500,
+        p_description => 'VIP Membership Fee',
+        p_received_by => 1
+    );
+END;
+/
+BEGIN
+    sp_process_payment(
+        p_member_id   => 26,
+        p_amount      => 500,
+        p_description => 'VIP Membership Fee',
+        p_received_by => 1
+    );
+END;
+/
+SELECT * from MEMBER;

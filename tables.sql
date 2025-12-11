@@ -15,7 +15,7 @@ create table member (
 );
 alter table member add created_by NUMBER;
 alter table member add CONSTRAINT sttaf_in_mem_fk FOREIGN key(created_by) REFERENCES staff(staff_id);
-
+alter table member MODIFY status VARCHAR2(20) default 'INACTIVE';
 select * from member;
 
 -- membership_plans
