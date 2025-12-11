@@ -1,5 +1,5 @@
 BEGIN
-    -- 1. JOB: به‌روزرسانی خودکار وضعیت اعضا (هر روز ساعت ۲ بامداد)
+--    update status in daily
     DBMS_SCHEDULER.CREATE_JOB (
         job_name        => 'AUTO_UPDATE_MEMBER_STATUS',
         job_type        => 'PLSQL_BLOCK',
@@ -20,7 +20,7 @@ BEGIN
         comments        => 'Auto update member status daily at 2 AM'
     );
     
-    -- 2. JOB: پاک‌سازی لاگ‌های قدیمی (هر ماه)
+--    clean log form sex mounts ago
     DBMS_SCHEDULER.CREATE_JOB (
         job_name        => 'CLEAN_OLD_AUDIT_LOGS',
         job_type        => 'PLSQL_BLOCK',
