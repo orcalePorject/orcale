@@ -17,3 +17,31 @@ BEGIN
     END IF;
 END;
 /
+
+CREATE OR REPLACE TRIGGER trg_payment_audit
+AFTER INSERT OR UPDATE OR DELETE ON payments
+FOR EACH ROW
+DECLARE
+    v_operation VARCHAR2(10);
+BEGIN
+    IF INSERTING THEN
+        v_operation := 'INSERT';
+        INSERT INTO payment_audit_log VALUES (
+            :NEW.payment_id, :NEW.member_id, :NEW.amount, 
+            :NEW.payment_date, v_operation, USER, SYSDATE
+        );
+    ELSIF UPDATING THEN
+        v_operation := 'UPDATE';
+        INSERT INTO payment_audit_log VALUES (
+            :NEW.payment_id, :NEW.member_id, :NEW.amount, 
+            :NEW.payment_date, v_operation, USER, SYSDATE
+        );
+    ELSIF DELETING THEN
+        v_operation := 'DELETE';
+        INSERT INTO payment_audit_log VALUES (
+            :OLD.payment_id, :OLD.member_id, :OLD.amount, 
+            :OLD.payment_date, v_operation, USER, SYSDATE
+        );
+    END IF;
+END;
+/
