@@ -26,22 +26,27 @@ DECLARE
 BEGIN
     IF INSERTING THEN
         v_operation := 'INSERT';
-        INSERT INTO payment_audit_log VALUES (
-            :NEW.payment_id, :NEW.member_id, :NEW.amount, 
-            :NEW.payment_date, v_operation, USER, SYSDATE
-        );
+        INSERT INTO payment_audit_log
+            (payment_id, member_id, amount, payment_date, operation, changed_by)
+        VALUES 
+            (:NEW.payment_id, :NEW.member_id, :NEW.amount,
+             :NEW.payment_date, v_operation, USER);
+
     ELSIF UPDATING THEN
         v_operation := 'UPDATE';
-        INSERT INTO payment_audit_log VALUES (
-            :NEW.payment_id, :NEW.member_id, :NEW.amount, 
-            :NEW.payment_date, v_operation, USER, SYSDATE
-        );
+        INSERT INTO payment_audit_log
+            (payment_id, member_id, amount, payment_date, operation, changed_by)
+        VALUES 
+            (:NEW.payment_id, :NEW.member_id, :NEW.amount,
+             :NEW.payment_date, v_operation, USER);
+
     ELSIF DELETING THEN
         v_operation := 'DELETE';
-        INSERT INTO payment_audit_log VALUES (
-            :OLD.payment_id, :OLD.member_id, :OLD.amount, 
-            :OLD.payment_date, v_operation, USER, SYSDATE
-        );
+        INSERT INTO payment_audit_log
+            (payment_id, member_id, amount, payment_date, operation, changed_by)
+        VALUES 
+            (:OLD.payment_id, :OLD.member_id, :OLD.amount,
+             :OLD.payment_date, v_operation, USER);
     END IF;
 END;
 /
