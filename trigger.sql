@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 CREATE OR REPLACE TRIGGER trg_prevent_duplicate_booking
 BEFORE INSERT ON class_bookings
 FOR EACH ROW
@@ -18,5 +17,3 @@ BEGIN
     END IF;
 END;
 /
-=======
->>>>>>> 81cfb4cb27fcef74a1fda0e819ec4569ddc86922
