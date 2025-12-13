@@ -2,10 +2,11 @@ const oracledb = require('oracledb');
 require('dotenv').config();
 
 // Initialize Oracle client
-oracledb.initOracleClient({ 
-  libDir: process.env.ORACLE_CLIENT_PATH || 'C:\\oracle\\instantclient_21_12' 
-  // Update this path to your Oracle Instant Client location
-});
+if (process.env.ORACLE_CLIENT_PATH) {
+  oracledb.initOracleClient({ 
+    libDir: process.env.ORACLE_CLIENT_PATH
+  });
+}
 
 // Database configuration
 const dbConfig = {
@@ -27,13 +28,18 @@ async function initialize() {
     console.log('✅ Oracle connection pool created');
   } catch (err) {
     console.error('❌ Error creating connection pool:', err.message);
-    process.exit(1);
+    console.log('💡 Trying to connect without pool...');
   }
 }
 
 async function getConnection() {
   try {
-    return await pool.getConnection();
+    if (pool) {
+      return await pool.getConnection();
+    } else {
+      // Fallback to direct connection
+      return await oracledb.getConnection(dbConfig);
+    }
   } catch (err) {
     console.error('❌ Error getting connection:', err.message);
     throw err;
@@ -42,8 +48,10 @@ async function getConnection() {
 
 async function closePool() {
   try {
-    await pool.close();
-    console.log('✅ Connection pool closed');
+    if (pool) {
+      await pool.close();
+      console.log('✅ Connection pool closed');
+    }
   } catch (err) {
     console.error('❌ Error closing pool:', err.message);
   }
@@ -62,6 +70,8 @@ async function executeQuery(sql, binds = [], options = {}) {
     return result;
   } catch (err) {
     console.error('❌ Query execution error:', err.message);
+    console.error('SQL:', sql);
+    console.error('Binds:', binds);
     throw err;
   } finally {
     if (connection) {
@@ -104,5 +114,5 @@ module.exports = {
   closePool,
   executeQuery,
   executeMany,
-  oracledb
+  oracledb // Export oracledb
 };

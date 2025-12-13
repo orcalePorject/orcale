@@ -319,3 +319,18 @@ INSERT INTO trainer_attendance (att_date, trainer_id, is_present) VALUES
 
 
 commit;
+
+
+
+
+COMMIT;
+
+-- Verify the user was created
+SELECT 
+    staff_id,
+    first_name || ' ' || last_name as full_name,
+    username,
+    role,
+    status
+FROM staff 
+WHERE username = 'admin';

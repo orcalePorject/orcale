@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-// Initialize database connection
+// Initialize database
 const db = require('./config/oracle');
+db.initialize();
 
 const app = express();
 
@@ -12,23 +13,23 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Initialize database
-db.initialize();
-
 // Routes
 app.use('/api/members', require('./routes/members'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/attendance', require('./routes/attendance'));
+app.use('/api/staff', require('./routes/staff'));
+app.use('/api/payments', require('./routes/payments'));
 
-// Health check endpoint
+// Health check
 app.get('/api/health', async (req, res) => {
   try {
-    const result = await db.executeQuery('SELECT SYSDATE as current_time FROM DUAL');
+    const result = await db.executeQuery('SELECT SYSDATE as now FROM DUAL');
     res.json({
       status: 'OK',
       timestamp: new Date().toISOString(),
       database: {
         connected: true,
-        currentTime: result.rows[0].CURRENT_TIME
+        currentTime: result.rows[0].NOW
       }
     });
   } catch (error) {
@@ -49,15 +50,16 @@ app.get('/', (req, res) => {
     message: '🏋️‍♂️ Gym Management System API',
     version: '1.0.0',
     endpoints: {
-      health: '/api/health',
+      health: 'GET /api/health',
       auth: {
         login: 'POST /api/auth/login',
-        profile: 'GET /api/auth/profile'
+        test: 'GET /api/auth/test'
       },
       members: {
+        test: 'GET /api/members/test',
         active: 'GET /api/members/active',
         register: 'POST /api/members/register',
-        search: 'GET /api/members/search?q=search_term',
+        search: 'GET /api/members/search?q=term',
         getById: 'GET /api/members/:id'
       }
     }
@@ -68,38 +70,22 @@ app.get('/', (req, res) => {
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
-    error: `Cannot ${req.method} ${req.originalUrl}`
+    error: `Route ${req.originalUrl} not found`
   });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server error:', err.stack);
-  
   res.status(err.status || 500).json({
     success: false,
-    error: process.env.NODE_ENV === 'development' 
-      ? err.message 
-      : 'Internal server error'
+    error: 'Internal server error',
+    message: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
-});
-
-// Graceful shutdown
-process.on('SIGTERM', async () => {
-  console.log('SIGTERM received. Closing connections...');
-  await db.closePool();
-  process.exit(0);
-});
-
-process.on('SIGINT', async () => {
-  console.log('SIGINT received. Closing connections...');
-  await db.closePool();
-  process.exit(0);
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`🌐 Open http://localhost:${PORT} in your browser`);
-  console.log('📊 Health check: http://localhost:${PORT}/api/health');
 });

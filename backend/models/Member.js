@@ -1,26 +1,48 @@
-const { executeQuery, executeMany } = require('../config/oracle');
+const { executeQuery } = require('../config/oracle');
 
 class Member {
   // Register new member
-  static async register(memberData) {
-    const sql = `
-      INSERT INTO member (
-        f_name, l_name, dob, phone, email, address, created_by, status
-      ) VALUES (
-        :f_name, :l_name, TO_DATE(:dob, 'YYYY-MM-DD'), :phone, :email, 
-        :address, :created_by, 'INACTIVE'
-      )
-      RETURNING m_id INTO :m_id
-    `;
-    
-    const binds = {
-      ...memberData,
-      m_id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT }
-    };
-    
-    const result = await executeQuery(sql, binds);
-    return result.outBinds.m_id[0];
+static async register(memberData) {
+  const { executeQuery, oracledb } = require('../config/oracle');
+  
+  console.log('📝 Member data for registration:', memberData);
+  
+  // Handle date properly - if dob is null or undefined, use NULL in SQL
+  let dobValue = memberData.dob;
+  let dobParam = dobValue ? `TO_DATE(:dob, 'YYYY-MM-DD')` : 'NULL';
+  
+  const sql = `
+    INSERT INTO member (
+      f_name, l_name, dob, phone, email, address, created_by, status
+    ) VALUES (
+      :f_name, :l_name, ${dobParam}, :phone, :email, 
+      :address, :created_by, 'INACTIVE'
+    )
+    RETURNING m_id INTO :m_id
+  `;
+  
+  // Prepare binds
+  const binds = {
+    f_name: memberData.f_name,
+    l_name: memberData.l_name || null,
+    phone: memberData.phone,
+    email: memberData.email || null,
+    address: memberData.address || null,
+    created_by: memberData.created_by || 1,
+    m_id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT }
+  };
+  
+  // Only add dob to binds if it has a value
+  if (dobValue) {
+    binds.dob = dobValue;
   }
+  
+  console.log('📋 SQL:', sql);
+  console.log('📋 Binds:', binds);
+  
+  const result = await executeQuery(sql, binds);
+  return result.outBinds.m_id[0];
+}
 
   // Get all active members
   static async getActiveMembers() {

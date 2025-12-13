@@ -61,6 +61,11 @@ CREATE TABLE staff (
     status        VARCHAR2(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE', 'ON_LEAVE')),
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+select * from staff where username='admin';
+UPDATE staff
+SET password_hash = '$2a$10$N9qo8uLOickgx2ZMRZoMye.Y1Q6q9lRcJ9L1o4GZR2A1RlJ9zK7eK'
+WHERE staff_id = 1;
+
 
 ALTER TABLE staff
 MODIFY  username VARCHAR2(100);
