@@ -59,7 +59,7 @@ const ProcessPayment = () => {
           member_id: memberId,
           amount: parseFloat(formData.amount),
           description: formData.description,
-          received_by: 1 // This should come from auth context
+          received_by: 4 // This should come from auth context
         })
       });
 

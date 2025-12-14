@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { executeQuery } = require('../config/oracle');
+const { executeQuery, oracledb } = require('../config/oracle'); 
 
 // Process payment
 router.post('/process', async (req, res) => {
@@ -33,16 +33,17 @@ router.post('/process', async (req, res) => {
        VALUES (:member_id, :amount, :description, :received_by, SYSDATE)
        RETURNING payment_id INTO :payment_id`,
       {
-        member_id,
-        amount,
+        member_id: parseInt(member_id),
+        amount: parseFloat(amount),
         description: description || 'Membership Fee',
         received_by: received_by || 1,
-        payment_id: { type: 'NUMBER', dir: 'OUT' }
+        payment_id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT } // <-- FIXED
       }
     );
+
+     const paymentId = paymentResult.outBinds.payment_id[0];
     
-    const paymentId = paymentResult.outBinds.payment_id[0];
-    
+    // Update member status to ACTIVE if payment is successful
     // Update member status to ACTIVE if payment is successful
     if (amount > 0) {
       await executeQuery(

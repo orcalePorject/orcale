@@ -22,6 +22,7 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
@@ -31,9 +32,9 @@ const Navbar = () => {
     { path: '/dashboard', label: 'Dashboard', icon: Home },
     { path: '/members', label: 'Members', icon: Users },
     { path: '/classes', label: 'Classes', icon: Calendar },
-    { path: '/payments', label: 'Payments', icon: CreditCard },
-{ path: '/attendance', label: 'Attendance', icon: Activity },
-{ path: '/staff', label: 'Staff', icon: Users },
+    { path: '/attendance', label: 'Attendance', icon: Activity },
+    { path: '/staff', label: 'Staff Management', icon: Users },
+     { path: '/plans', label: 'Plans', icon: CreditCard },
   ];
 
   return (

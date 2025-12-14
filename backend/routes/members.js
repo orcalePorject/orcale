@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
-// Import controller functions directly (simpler)
 const { executeQuery } = require('../config/oracle');
 
 // Test endpoint
@@ -72,6 +70,7 @@ router.get('/', async (req, res) => {
     });
   }
 });
+
 // Get all active members
 router.get('/active', async (req, res) => {
   try {
@@ -91,6 +90,101 @@ router.get('/active', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to fetch members'
+    });
+  }
+});
+
+// SEARCH MEMBERS - ADD THIS ENDPOINT
+// routes/members.js - Update search endpoint
+router.get('/search', async (req, res) => {
+  try {
+    const { q } = req.query;
+    
+    console.log('🔍 Search query received:', q);
+    
+    if (!q || q.trim().length < 2) {
+      return res.json({
+        success: true,
+        data: [],
+        message: 'Enter at least 2 characters to search'
+      });
+    }
+
+    const searchTerm = `%${q.trim()}%`; // Don't convert to uppercase
+    
+    console.log('🔍 Searching for term:', searchTerm);
+    
+    // Test if there are any members in the database
+    const testQuery = await executeQuery(
+      'SELECT COUNT(*) as total_count FROM member'
+    );
+    console.log('📊 Total members in database:', testQuery.rows[0].TOTAL_COUNT);
+    
+    // Try a simpler search query first
+    const result = await executeQuery(
+      `SELECT 
+        m_id,
+        f_name,
+        l_name,
+        phone,
+        email,
+        status,
+        f_name || ' ' || l_name as full_name
+       FROM member
+       WHERE (f_name LIKE :searchTerm 
+          OR l_name LIKE :searchTerm
+          OR phone LIKE :searchTerm
+          OR email LIKE :searchTerm)
+       AND status = 'ACTIVE'
+       ORDER BY f_name`,
+      { searchTerm: searchTerm }
+    );
+    
+    console.log('🔍 Simple search results found:', result.rows.length);
+    
+    // If no results with simple search, try case-insensitive
+    if (result.rows.length === 0) {
+      console.log('🔍 Trying case-insensitive search...');
+      const caseInsensitiveResult = await executeQuery(
+        `SELECT 
+          m_id,
+          f_name,
+          l_name,
+          phone,
+          email,
+          status,
+          f_name || ' ' || l_name as full_name
+         FROM member
+         WHERE (UPPER(f_name) LIKE UPPER(:searchTerm) 
+            OR UPPER(l_name) LIKE UPPER(:searchTerm)
+            OR phone LIKE :searchTerm
+            OR UPPER(email) LIKE UPPER(:searchTerm))
+         AND status = 'ACTIVE'
+         ORDER BY f_name`,
+        { searchTerm: searchTerm }
+      );
+      
+      console.log('🔍 Case-insensitive results:', caseInsensitiveResult.rows.length);
+      
+      return res.json({
+        success: true,
+        count: caseInsensitiveResult.rows.length,
+        data: caseInsensitiveResult.rows
+      });
+    }
+    
+    res.json({
+      success: true,
+      count: result.rows.length,
+      data: result.rows
+    });
+    
+  } catch (error) {
+    console.error('❌ Search error:', error.message);
+    console.error('Error details:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Search failed: ' + error.message
     });
   }
 });
@@ -205,24 +299,111 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Search members
-router.get('/search', async (req, res) => {
+// Update member
+router.put('/:id', async (req, res) => {
   try {
-    const { q } = req.query;
+    const memberId = req.params.id;
+    const {
+      f_name,
+      l_name,
+      dob,
+      phone,
+      email,
+      address,
+      status
+    } = req.body;
     
-    if (!q || q.trim().length < 2) {
-      return res.json({
-        success: true,
-        data: [],
-        message: 'Enter at least 2 characters'
+    // Check if member exists
+    const checkResult = await executeQuery(
+      'SELECT m_id FROM member WHERE m_id = :id',
+      [memberId]
+    );
+    
+    if (checkResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Member not found'
       });
     }
     
-    const searchTerm = q.trim();
+    // Build dynamic update query
+    let updateFields = [];
+    let binds = { member_id: memberId };
+    
+    if (f_name !== undefined) {
+      updateFields.push('f_name = :f_name');
+      binds.f_name = f_name;
+    }
+    if (l_name !== undefined) {
+      updateFields.push('l_name = :l_name');
+      binds.l_name = l_name;
+    }
+    if (dob !== undefined) {
+      if (dob === null || dob === '') {
+        updateFields.push('dob = NULL');
+      } else {
+        updateFields.push('dob = TO_DATE(:dob, \'YYYY-MM-DD\')');
+        binds.dob = dob;
+      }
+    }
+    if (phone !== undefined) {
+      updateFields.push('phone = :phone');
+      binds.phone = phone;
+    }
+    if (email !== undefined) {
+      updateFields.push('email = :email');
+      binds.email = email || null;
+    }
+    if (address !== undefined) {
+      updateFields.push('address = :address');
+      binds.address = address || null;
+    }
+    if (status !== undefined) {
+      updateFields.push('status = :status');
+      binds.status = status;
+    }
+    
+    if (updateFields.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'No fields to update'
+      });
+    }
+    
+    const sql = `UPDATE member SET ${updateFields.join(', ')} WHERE m_id = :member_id`;
+    
+    await executeQuery(sql, binds);
+    
+    res.json({
+      success: true,
+      message: 'Member updated successfully'
+    });
+    
+  } catch (error) {
+    console.error('Member update error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to update member: ' + error.message
+    });
+  }
+});
+
+// Add debug endpoint to routes/members.js
+router.get('/debug/all', async (req, res) => {
+  try {
     const result = await executeQuery(
-      "SELECT m_id, f_name || ' ' || COALESCE(l_name, '') as full_name, phone, email, status FROM member WHERE UPPER(f_name) LIKE UPPER(:term) OR UPPER(l_name) LIKE UPPER(:term) OR phone LIKE :term ORDER BY f_name",
-      { term: `%${searchTerm}%` }
+      `SELECT 
+        m_id,
+        f_name,
+        l_name,
+        phone,
+        email,
+        status
+       FROM member
+       ORDER BY m_id`
     );
+    
+    console.log('📊 All members in database:', result.rows);
     
     res.json({
       success: true,
@@ -230,12 +411,11 @@ router.get('/search', async (req, res) => {
       data: result.rows
     });
   } catch (error) {
-    console.error('Search error:', error);
+    console.error('Debug error:', error);
     res.status(500).json({
       success: false,
-      error: 'Search failed'
+      error: 'Debug failed: ' + error.message
     });
   }
 });
-
 module.exports = router;

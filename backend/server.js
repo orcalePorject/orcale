@@ -19,6 +19,9 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/attendance', require('./routes/attendance'));
 app.use('/api/staff', require('./routes/staff'));
 app.use('/api/payments', require('./routes/payments'));
+app.use('/api/classes', require('./routes/classes'));
+app.use('/api/trainers', require('./routes/trainers'));
+app.use('/api/membership', require('./routes/membership'));
 
 // Health check
 app.get('/api/health', async (req, res) => {

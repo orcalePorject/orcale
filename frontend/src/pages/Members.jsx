@@ -14,8 +14,10 @@ import {
   UserCheck,
   CreditCard,
   RefreshCw
+  , X 
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import EditMemberModal from '../components/EditMemberModal';
 
 const Members = () => {
   const navigate = useNavigate();
@@ -24,6 +26,57 @@ const Members = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showInactive, setShowInactive] = useState(false);
+  
+  const [editingMember, setEditingMember] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  // Add this function to handle edit button click
+  const handleEditClick = (member) => {
+    setEditingMember(member);
+    setIsEditModalOpen(true);
+  };
+
+  // Add this function to handle form changes
+  const handleSaveMember = async (formData) => {
+    if (!editingMember) return;
+    
+    if (!formData.f_name || !formData.phone) {
+      toast.error('First name and phone are required');
+      return;
+    }
+    
+    setSaving(true);
+    try {
+      const response = await fetch(`http://localhost:5000/api/members/${editingMember.M_ID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        toast.success('Member updated successfully!');
+        setIsEditModalOpen(false);
+        setEditingMember(null);
+        fetchAllMembers(); // Refresh the list
+      } else {
+        toast.error(data.error || 'Failed to update member');
+      }
+    } catch (error) {
+      console.error('Error updating member:', error);
+      toast.error('Failed to update member');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+    const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingMember(null);
+  };
+
 
   // This function should be inside the component, before the useEffect
   const fetchAllMembers = async () => {
@@ -62,6 +115,7 @@ const Members = () => {
       setLoading(false);
     }
   };
+
 
   // Load members on component mount
   useEffect(() => {
@@ -125,6 +179,15 @@ const Members = () => {
 
   return (
     <div className="p-4 md:p-6">
+
+                                                    {/* edit */}
+                        <EditMemberModal
+                          isOpen={isEditModalOpen}
+                          onClose={closeEditModal}
+                          member={editingMember}
+                          onSave={handleSaveMember}
+                          loading={saving}
+                        />
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
         <div>
@@ -155,13 +218,13 @@ const Members = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <form onSubmit={handleSearch} className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+             {!searchTerm.length>0 && <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />}
               <input
                 type="text"
                 placeholder="Search members by name, phone, or email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-field pl-10"
+                className="input-field   placeholder:pl-6"
               />
             </div>
           </form>
@@ -306,17 +369,15 @@ const Members = () => {
                         >
                           <Eye size={18} />
                         </button>
-                        <button
-                          className="p-2 text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
-                          title="Edit Member"
-                          onClick={() => {
-                            // Implement edit functionality
-                            toast.info('Edit feature coming soon!');
-                          }}
-                        >
-                          <Edit size={18} />
-                        </button>
-                        <button
+
+                          <button
+                            onClick={() => handleEditClick(member)}
+                            className="p-2 text-yellow-600 hover:bg-yellow-50 rounded-md transition-colors"
+                            title="Edit Member"
+                          >
+                            <Edit size={18} />
+                          </button>
+                           <button
                           className="p-2 text-green-600 hover:bg-green-50 rounded-md transition-colors"
                           title="Mark Attendance"
                           onClick={() => handleMarkAttendance(member.M_ID, `${member.F_NAME} ${member.L_NAME}`)}

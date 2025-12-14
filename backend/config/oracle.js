@@ -71,7 +71,7 @@ async function executeQuery(sql, binds = [], options = {}) {
   } catch (err) {
     console.error('❌ Query execution error:', err.message);
     console.error('SQL:', sql);
-    console.error('Binds:', binds);
+    console.error('Binds:', JSON.stringify(binds, null, 2));
     throw err;
   } finally {
     if (connection) {

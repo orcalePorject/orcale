@@ -15,17 +15,18 @@ const Login = () => {
   const navigate = useNavigate();
   const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
 
-  // Clear errors on mount
+  // Clear errors on component mount only
   useEffect(() => {
     dispatch(clearError());
-  }, [dispatch]);
+  }, []); // Empty dependency array - runs only once on mount
 
-  // Redirect if already authenticated - FIXED: Add dependency array
+  // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
+      console.log('User is authenticated, redirecting to dashboard');
       navigate('/dashboard');
     }
-  }, [isAuthenticated, navigate]); // Added dependencies
+  }, [isAuthenticated, navigate]); // Only re-run when isAuthenticated changes
 
   const handleChange = (e) => {
     setFormData({
@@ -46,7 +47,7 @@ const Login = () => {
     
     if (result.type === 'auth/login/fulfilled') {
       toast.success('Login successful!');
-      // Navigation will be handled by the useEffect above
+      // Don't navigate here - let the useEffect handle it
     } else if (result.type === 'auth/login/rejected') {
       toast.error(result.payload || 'Login failed');
     }
